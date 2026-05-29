@@ -26,18 +26,29 @@ async function guardarIncidente() {
 
     });
 
+    document.getElementById("titulo").value = "";
+    document.getElementById("descripcion").value = "";
+
     cargarIncidentes();
 
 }
+
+/* =========================
+   ELIMINAR INCIDENTE
+========================= */
+
 async function eliminarIncidente(id) {
 
-    await fetch(`http://localhost:3000/api/incidentes/${id}`, {
+    await fetch(`${API}/${id}`, {
+
         method: "DELETE"
+
     });
 
     cargarIncidentes();
 
 }
+
 /* =========================
    CARGAR INCIDENTES
 ========================= */
@@ -52,31 +63,41 @@ async function cargarIncidentes() {
 
     lista.innerHTML = "";
 
-    incidentes.forEach(incidente => {
+    incidentes.forEach((incidente) => {
 
-        lista.innerHTML += `
-            <li>
-                <strong>${incidente.titulo}</strong><br>
-                ${incidente.descripcion}<br>
-                <small>${incidente.fecha}</small>
-            </li>
-            <hr>
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+
+            <strong>${incidente.titulo}</strong>
+
+            <br>
+
+            ${incidente.descripcion}
+
+            <br>
+
+            <small>
+                ${incidente.fecha}
+            </small>
+
+            <br><br>
+
+            <button onclick="eliminarIncidente(${incidente.id})">
+                Eliminar
+            </button>
+
         `;
+
+        lista.appendChild(li);
 
     });
 
 }
 
-cargarIncidentes();
-li.innerHTML = `
-    <strong>${incidente.titulo}</strong>
-    <br>
-    ${incidente.descripcion}
-    <br>
-    <small>${incidente.fecha}</small>
-    <br><br>
+/* =========================
+   CARGA INICIAL
+========================= */
 
-    <button onclick="eliminarIncidente(${incidente.id})">
-        Eliminar
-    </button>
-`;
+cargarIncidentes();
+```
