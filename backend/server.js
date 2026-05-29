@@ -49,19 +49,25 @@ app.get("/api/status", (req, res) => {
 app.get("/api/incidentes", (req, res) => {
 
     db.all(
-        "SELECT * FROM incidentes ORDER BY fecha DESC",
+        "SELECT * FROM incidentes ORDER BY id DESC",
         [],
         (err, rows) => {
 
             if (err) {
-                res.status(500).json(err);
-                return;
+
+                return res.status(500).json({
+                    error: err.message
+                });
+
             }
 
             res.json(rows);
 
         }
     );
+
+});
+
 app.delete("/api/incidentes/:id", (req, res) => {
 
     const id = req.params.id;
