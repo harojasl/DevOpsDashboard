@@ -26,6 +26,25 @@ async function guardarIncidente() {
 
     });
 
+    document.getElementById("titulo").value = "";
+    document.getElementById("descripcion").value = "";
+
+    cargarIncidentes();
+
+}
+
+/* =========================
+   ELIMINAR INCIDENTE
+========================= */
+
+async function eliminarIncidente(id) {
+
+    await fetch(`${API}/${id}`, {
+
+        method: "DELETE"
+
+    });
+
     cargarIncidentes();
 
 }
@@ -44,48 +63,41 @@ async function cargarIncidentes() {
 
     lista.innerHTML = "";
 
-    incidentes.forEach(incidente => {
+    incidentes.forEach((incidente) => {
 
-        lista.innerHTML += `
-            <li>
-                <strong>${incidente.titulo}</strong><br>
-                ${incidente.descripcion}<br>
-                <small>${incidente.fecha}</small>
-            </li>
-            <hr>
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+
+            <strong>${incidente.titulo}</strong>
+
+            <br>
+
+            ${incidente.descripcion}
+
+            <br>
+
+            <small>
+                ${incidente.fecha}
+            </small>
+
+            <br><br>
+
+            <button onclick="eliminarIncidente(${incidente.id})">
+                Eliminar
+            </button>
+
         `;
+
+        lista.appendChild(li);
 
     });
 
 }
 
+/* =========================
+   CARGA INICIAL
+========================= */
+
 cargarIncidentes();
-async function cargarInfoServidor() {
-
-    const response =
-        await fetch("http://localhost:3000/api/server-info");
-
-    const data = await response.json();
-
-    const lista =
-        document.getElementById("serverInfo");
-
-    lista.innerHTML = `
-
-        <li><b>Hostname:</b> ${data.hostname}</li>
-
-        <li><b>Plataforma:</b> ${data.plataforma}</li>
-
-        <li><b>Uptime:</b> ${data.uptime} minutos</li>
-
-        <li><b>RAM Total:</b> ${data.memoriaTotal}</li>
-
-        <li><b>RAM Libre:</b> ${data.memoriaLibre}</li>
-
-        <li><b>CPU:</b> ${data.cpu}</li>
-
-    `;
-
-}
-
-cargarInfoServidor();
+```

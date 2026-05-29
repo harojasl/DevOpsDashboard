@@ -62,6 +62,56 @@ app.get("/api/incidentes", (req, res) => {
 
         }
     );
+app.delete("/api/incidentes/:id", (req, res) => {
+
+    const id = req.params.id;
+
+    db.run(
+        "DELETE FROM incidentes WHERE id = ?",
+        [id],
+        function (err) {
+
+            if (err) {
+
+                return res.status(500).json({
+                    error: err.message
+                });
+
+            }
+
+            res.json({
+                mensaje: "Incidente eliminado"
+            });
+
+        }
+    );
+
+});
+
+});
+const os = require("os");
+
+app.get("/api/server-info", (req, res) => {
+
+    res.json({
+
+        hostname: os.hostname(),
+
+        plataforma: os.platform(),
+
+        uptime: Math.floor(os.uptime() / 60),
+
+        memoriaTotal:
+            Math.floor(os.totalmem() / 1024 / 1024) + " MB",
+
+        memoriaLibre:
+            Math.floor(os.freemem() / 1024 / 1024) + " MB",
+
+        cpu: os.cpus()[0].model,
+
+        fecha: new Date()
+
+    });
 
 });
 
