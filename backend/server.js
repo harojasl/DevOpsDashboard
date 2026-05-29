@@ -1,6 +1,7 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
+const os = require("os");
 
 const app = express();
 
@@ -43,53 +44,8 @@ app.get("/api/status", (req, res) => {
 });
 
 /* =========================
-   OBTENER INCIDENTES
+   SERVER INFO
 ========================= */
-
-app.get("/api/incidentes", (req, res) => {
-
-    db.all(
-        "SELECT * FROM incidentes ORDER BY fecha DESC",
-        [],
-        (err, rows) => {
-
-            if (err) {
-                res.status(500).json(err);
-                return;
-            }
-
-            res.json(rows);
-
-        }
-    );
-app.delete("/api/incidentes/:id", (req, res) => {
-
-    const id = req.params.id;
-
-    db.run(
-        "DELETE FROM incidentes WHERE id = ?",
-        [id],
-        function (err) {
-
-            if (err) {
-
-                return res.status(500).json({
-                    error: err.message
-                });
-
-            }
-
-            res.json({
-                mensaje: "Incidente eliminado"
-            });
-
-        }
-    );
-
-});
-
-});
-const os = require("os");
 
 app.get("/api/server-info", (req, res) => {
 
@@ -116,6 +72,32 @@ app.get("/api/server-info", (req, res) => {
 });
 
 /* =========================
+   OBTENER INCIDENTES
+========================= */
+
+app.get("/api/incidentes", (req, res) => {
+
+    db.all(
+        "SELECT * FROM incidentes ORDER BY id DESC",
+        [],
+        (err, rows) => {
+
+            if (err) {
+
+                return res.status(500).json({
+                    error: err.message
+                });
+
+            }
+
+            res.json(rows);
+
+        }
+    );
+
+});
+
+/* =========================
    CREAR INCIDENTE
 ========================= */
 
@@ -126,17 +108,50 @@ app.post("/api/incidentes", (req, res) => {
     db.run(
         "INSERT INTO incidentes (titulo, descripcion) VALUES (?, ?)",
         [titulo, descripcion],
-        function(err) {
+        function (err) {
 
             if (err) {
-                res.status(500).json(err);
-                return;
+
+                return res.status(500).json({
+                    error: err.message
+                });
+
             }
 
             res.json({
                 id: this.lastID,
                 titulo,
                 descripcion
+            });
+
+        }
+    );
+
+});
+
+/* =========================
+   ELIMINAR INCIDENTE
+========================= */
+
+app.delete("/api/incidentes/:id", (req, res) => {
+
+    const id = req.params.id;
+
+    db.run(
+        "DELETE FROM incidentes WHERE id = ?",
+        [id],
+        function (err) {
+
+            if (err) {
+
+                return res.status(500).json({
+                    error: err.message
+                });
+
+            }
+
+            res.json({
+                mensaje: "Incidente eliminado"
             });
 
         }
