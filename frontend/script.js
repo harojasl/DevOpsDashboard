@@ -1,35 +1,17 @@
-const API = "http://192.168.1.13:3000";
+const API = "http://localhost:3000/api/incidentes";
 
-async function cargarIncidentes() {
-
-    const response = await fetch(`${API}/incidentes`);
-
-    const data = await response.json();
-
-    const lista = document.getElementById("lista");
-
-    lista.innerHTML = "";
-
-    data.forEach(i => {
-
-        lista.innerHTML += `
-            <li>
-                <b>${i.titulo}</b><br>
-                ${i.descripcion}<br><br>
-            </li>
-        `;
-
-    });
-
-}
+/* =========================
+   GUARDAR INCIDENTE
+========================= */
 
 async function guardarIncidente() {
 
     const titulo = document.getElementById("titulo").value;
 
-    const descripcion = document.getElementById("descripcion").value;
+    const descripcion =
+        document.getElementById("descripcion").value;
 
-    await fetch(`${API}/incidentes`, {
+    await fetch(API, {
 
         method: "POST",
 
@@ -45,6 +27,35 @@ async function guardarIncidente() {
     });
 
     cargarIncidentes();
+
+}
+
+/* =========================
+   CARGAR INCIDENTES
+========================= */
+
+async function cargarIncidentes() {
+
+    const respuesta = await fetch(API);
+
+    const incidentes = await respuesta.json();
+
+    const lista = document.getElementById("lista");
+
+    lista.innerHTML = "";
+
+    incidentes.forEach(incidente => {
+
+        lista.innerHTML += `
+            <li>
+                <strong>${incidente.titulo}</strong><br>
+                ${incidente.descripcion}<br>
+                <small>${incidente.fecha}</small>
+            </li>
+            <hr>
+        `;
+
+    });
 
 }
 
