@@ -29,7 +29,15 @@ async function guardarIncidente() {
     cargarIncidentes();
 
 }
+async function eliminarIncidente(id) {
 
+    await fetch(`http://localhost:3000/api/incidentes/${id}`, {
+        method: "DELETE"
+    });
+
+    cargarIncidentes();
+
+}
 /* =========================
    CARGAR INCIDENTES
 ========================= */
@@ -60,3 +68,15 @@ async function cargarIncidentes() {
 }
 
 cargarIncidentes();
+li.innerHTML = `
+    <strong>${incidente.titulo}</strong>
+    <br>
+    ${incidente.descripcion}
+    <br>
+    <small>${incidente.fecha}</small>
+    <br><br>
+
+    <button onclick="eliminarIncidente(${incidente.id})">
+        Eliminar
+    </button>
+`;
