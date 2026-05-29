@@ -1,40 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
 
+<p>Ambiente DEVELOP 🚀</p>
 <head>
 
-  <meta charset="UTF-8">
-  <title>DevOps Dashboard</title>
+    <meta charset="UTF-8">
 
-  <link rel="stylesheet" href="style.css">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DevOps Incident Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-  <h1>DevOps Incident Dashboard 🚀</h1>
+    <header>
 
-  <div class="card">
+        <h1>DevOps Incident Dashboard 🚀</h1>
 
-    <input type="text" id="titulo" placeholder="Título">
+        <p>
+            Gestión de incidentes DevOps
+        </p>
 
-    <textarea id="descripcion" placeholder="Descripción"></textarea>
+    </header>
 
-    <button onclick="guardarIncidente()">
-      Guardar
-    </button>
+    <main>
 
-  </div>
+        <!-- =========================
+             FORMULARIO
+        ========================== -->
 
-  <div class="card">
+        <section class="card">
 
-    <h2>Incidentes</h2>
+            <h2>Nuevo Incidente</h2>
 
-    <ul id="lista"></ul>
+            <input
+                type="text"
+                id="titulo"
+                placeholder="Título"
+            >
 
-  </div>
+            <textarea
+                id="descripcion"
+                placeholder="Descripción"
+            ></textarea>
 
-  <script src="script.js"></script>
+            <button onclick="guardarIncidente()">
+                Guardar
+            </button>
+
+        </section>
+
+        <!-- =========================
+             LISTA INCIDENTES
+        ========================== -->
+
+        <section class="card">
+
+            <h2>Incidentes</h2>
+
+            <ul id="lista"></ul>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
 
 </body>
 
