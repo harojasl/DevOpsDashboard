@@ -60,3 +60,32 @@ async function cargarIncidentes() {
 }
 
 cargarIncidentes();
+async function cargarInfoServidor() {
+
+    const response =
+        await fetch("http://localhost:3000/api/server-info");
+
+    const data = await response.json();
+
+    const lista =
+        document.getElementById("serverInfo");
+
+    lista.innerHTML = `
+
+        <li><b>Hostname:</b> ${data.hostname}</li>
+
+        <li><b>Plataforma:</b> ${data.plataforma}</li>
+
+        <li><b>Uptime:</b> ${data.uptime} minutos</li>
+
+        <li><b>RAM Total:</b> ${data.memoriaTotal}</li>
+
+        <li><b>RAM Libre:</b> ${data.memoriaLibre}</li>
+
+        <li><b>CPU:</b> ${data.cpu}</li>
+
+    `;
+
+}
+
+cargarInfoServidor();
